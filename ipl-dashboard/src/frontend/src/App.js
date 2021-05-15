@@ -7,16 +7,17 @@ import { MatchPage } from './pages/MatchPage';
 function App() {
   return (
     <div className="App">
-      <Switch>
+     
       <Router>
+      <Switch>
         <Route path="/team/:teamName/matches/:year">
           <MatchPage/>
         </Route>
         <Route path="/team/:teamName">
           <TeamPage/>
         </Route>      
-      </Router>
       </Switch>
+      </Router>
     </div>
   );
 }

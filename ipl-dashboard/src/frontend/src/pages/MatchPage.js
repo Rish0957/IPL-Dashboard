@@ -6,13 +6,15 @@ import { MatchSmallCard } from '../components/MatchSmallCard';
 
 export const MatchPage = ()=>{
 
-  const [team, setTeam] = useState({matches:[]});
-  const { teamName } = useParams();
+  const [matches, setTeam] = useState([]);
+  const { teamName, year } = useParams();
+//   const teamName="Delhi Capitals";
+//   const year =2018;
   
   useEffect(
     ()=>{
       const fetchMatches = async () =>{
-        const response = await fetch(`http://localhost:8080/team/${teamName}/matches/${year}`);
+        const response = await fetch(`http://localhost:8080/team/${teamName}/matches?year=${year}`);
         const data = await response.json();
         setTeam(data);
       }
@@ -20,16 +22,14 @@ export const MatchPage = ()=>{
     },[teamName]
   );
 
-  if(!team || !team.teamName){
+  if(!matches){
     return <h2>404 Not found</h2>
   }
 
   return (
-    <div className="TeamPage">
-      <h1 >{team.teamName}</h1>
-
-      <MatchDetailsCard teamName={team.teamName} match={team.matches[0]}/>
-      {team.matches.slice(1).map(match=><MatchSmallCard teamName={team.teamName} match={match}/>)}
+    <div className="MatchPage">
+      <h1 >{teamName}</h1>
+      {matches.map(match=><MatchDetailsCard teamName={teamName} match={match}/>)}
     </div>
   );
 }
